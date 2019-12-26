@@ -51,6 +51,8 @@ public class DummyNeighbourApiService implements NeighbourApiService {
 
     @Override
     public Neighbour get1Neighbour(int numId) {
+        //TODO: Ne doit pas retourner "null" ?
+        System.out.println("DummyNeighbourApiService | numId= " + numId);
         return null;
     }
 

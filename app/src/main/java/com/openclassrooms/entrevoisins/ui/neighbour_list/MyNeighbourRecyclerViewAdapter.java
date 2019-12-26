@@ -107,6 +107,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                 //TODO Afficher le profil
 
                 contactIntent.putExtra("$CONTACT$", neighbour.getId());
+                System.out.println("ID du contact: " + contactIntent.getIntExtra("$CONTACT$",0));
                 mContext.startActivity(contactIntent);
 
             }
