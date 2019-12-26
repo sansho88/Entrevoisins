@@ -102,7 +102,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                 }
                // EventBus.getDefault().post(new AddFavNeighbourEvent());
 
-                System.out.println("---------------------------");
+                System.out.println("----------------------------");
 
 
 
