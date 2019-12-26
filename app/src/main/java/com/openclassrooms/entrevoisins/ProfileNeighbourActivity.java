@@ -44,10 +44,11 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
 
 
         int idIntent = getIntent().getIntExtra("$CONTACT$", 0);
-
          neighbour = neighbourApiService.get1Neighbour(idIntent);
+        System.out.println("Profile appartenant à : " + neighbour); //TODO: Doit afficher le bon contact
 
-        System.out.println("Profile appartenant à : " + neighbour);
+        //TODO: Affecter chaque view à son élément du contact correspondant
+
         // Retrouver le contactt entier depuis l'ID entier
 
         //int id = idIntent.getIntExtra(MyNeighbourRecyclerViewAdapter.CONTACT_BUNDLE,0);
