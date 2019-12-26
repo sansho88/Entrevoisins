@@ -37,11 +37,14 @@ import static android.support.v4.content.ContextCompat.startActivity;
 public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeighbourRecyclerViewAdapter.ViewHolder>  {
 
     private final List<Neighbour> mNeighbours;
+    private Context mContext;
     public static final String CONTACT_BUNDLE = "$CONTACT$";
 
 
-    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items) {
+
+    public MyNeighbourRecyclerViewAdapter(Context context, List<Neighbour> items) {
         mNeighbours = items;
+        mContext = context;
     }
 
 
@@ -56,52 +59,35 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        Neighbour neighbour = mNeighbours.get(position);
+        Neighbour neighbour;
+        neighbour = mNeighbours.get(position);
         holder.mNeighbourName.setText(neighbour.getName());
+
         Glide.with(holder.mNeighbourAvatar.getContext())
                 .load(neighbour.getAvatarUrl())
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.mNeighbourAvatar);
-        // holder.mFavButton.(neighbour.getFavoris());
-       /* Glide.with(holder.mFavButton.getContext()) //Touche perso'
-                .load(neighbour.getFavoris())
-                .apply(RequestOptions.circleCropTransform())
-                .into(holder.mFavButton); */
 
         holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
+
             }
         });
         holder.mFavButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View bouton) {
+
                 Intent favorisIntent = new Intent();
-                EventBus.getDefault().post(new AddFavNeighbourEvent());
+                EventBus.getDefault().post(new AddFavNeighbourEvent(neighbour));
 
-                //TODO : Add to Liste Favoris
+                //Add to Liste Favoris
                 System.out.println("----------------------------");
-                if(!neighbour.getFavoris()) {
-
-                    neighbour.setFavoris(true);
-                    System.out.println(holder.mNeighbourName.getText() + " ajouté aux favoris" );
-                    holder.mFavButton.setChecked(true);
-                    System.out.println("case cochée? " + holder.mFavButton.isChecked());
-
-                    favorisIntent.putExtra(neighbour.getId().toString(),0);
-
-
-                }
-                else{
-                    neighbour.setFavoris(false);
-                    System.out.println(holder.mNeighbourName.getText() + " est supprimé des favoris" );
-                    holder.mFavButton.setChecked(false);
-                    System.out.println("case cochée? " + holder.mFavButton.isChecked());
-                    favorisIntent.removeExtra(neighbour.getId().toString());
-                }
-               // EventBus.getDefault().post(new AddFavNeighbourEvent());
-
+                System.out.println(neighbour.getName() + " est dans les favoris? " + neighbour.getFavoris());
+                if (neighbour.getFavoris())
+                    favorisIntent.putExtra(neighbour.toString(),0);
+                else favorisIntent.removeExtra(neighbour.toString());
                 System.out.println("----------------------------");
 
 
@@ -117,10 +103,11 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             public void onClick(View view) {
                 System.out.println("Profil cliqué!: " + holder.mNeighbourName.getText() + "\nID du profil:  ");
 
-               /* Intent contactIntent = new Intent(this, ProfileNeighbourActivity.class); //paramétrer l'activité
+                 Intent contactIntent = new Intent(mContext, ProfileNeighbourActivity.class); //paramétrer l'activité
                 //TODO Afficher le profil
-                contactIntent.putExtra(CONTACT_BUNDLE, neighbour.getId());
-                startActivity(contactIntent); */
+
+                contactIntent.putExtra("$CONTACT$", neighbour.getId());
+                mContext.startActivity(contactIntent);
 
             }
         });

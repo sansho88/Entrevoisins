@@ -64,7 +64,7 @@ public class NeighbourFragment extends Fragment {
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         initList();
 
-        Neighbour neighbour = mNeighbours.get(0);
+        //Neighbour neighbour = mNeighbours.get(view.getId());
 
 
         return view;
@@ -78,7 +78,7 @@ public class NeighbourFragment extends Fragment {
      */
     private void initList() {
         mNeighbours = mApiService.getNeighbours();
-        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours));
+        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(getContext(), mNeighbours));
     }
 
     @Override
@@ -112,4 +112,5 @@ public class NeighbourFragment extends Fragment {
         mRecyclerView.getAdapter().notifyDataSetChanged();
         System.out.println("onAddFavNeighbour utilisé");
     }
+
 }

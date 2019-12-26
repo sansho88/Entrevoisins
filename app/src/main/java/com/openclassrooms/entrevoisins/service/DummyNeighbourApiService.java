@@ -49,5 +49,10 @@ public class DummyNeighbourApiService implements NeighbourApiService {
         neighbour.setFavoris(false);
     }
 
+    @Override
+    public Neighbour get1Neighbour(int numId) {
+        return null;
+    }
+
 
 }

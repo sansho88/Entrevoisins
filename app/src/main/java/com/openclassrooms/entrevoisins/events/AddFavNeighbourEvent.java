@@ -9,9 +9,9 @@ public class AddFavNeighbourEvent implements NeighbourApiService {
 
     public Neighbour mNeighbour;
 //TODO: Appeler la méthode de l'api NeighbourApiService: addFavNeighbour()
-    public void AddFavNeighbourEvent(Neighbour mNeighbour){
-        this.mNeighbour = mNeighbour;
-        addFavNeighbour(mNeighbour);
+    public AddFavNeighbourEvent(Neighbour voisin){
+        this.mNeighbour = voisin;
+        addFavNeighbour(voisin);
 
     }
 
@@ -27,8 +27,12 @@ public class AddFavNeighbourEvent implements NeighbourApiService {
 
     @Override
     public void addFavNeighbour(Neighbour neighbour) {
-        mNeighbour.setFavoris(true);
-        System.out.println(mNeighbour + " ajouté à la liste des favoris");
+        if (!neighbour.getFavoris()){
+            neighbour.setFavoris(true);
+            System.out.println(neighbour.getName() + " a été ajouté à la liste des favoris");
+        }else{
+           deleteFav(neighbour);
+        }
     }
 
     @Override
@@ -38,7 +42,12 @@ public class AddFavNeighbourEvent implements NeighbourApiService {
 
     @Override
     public void deleteFav(Neighbour neighbour) {
-        mNeighbour.setFavoris(false);
-        System.out.println(mNeighbour + " supprimé de la liste des favoris");
+        neighbour.setFavoris(false);
+        System.out.println(neighbour.getName() + " a été supprimé de la liste des favoris");
+    }
+
+    @Override
+    public Neighbour get1Neighbour(int numId) {
+        return null;
     }
 }

@@ -42,4 +42,5 @@ public interface NeighbourApiService {
     void deleteFav(Neighbour neighbour);
 
 
+    Neighbour get1Neighbour(int numId);
 }

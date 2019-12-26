@@ -7,6 +7,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.openclassrooms.entrevoisins.di.DI;
+import com.openclassrooms.entrevoisins.model.Neighbour;
+import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 import com.openclassrooms.entrevoisins.ui.neighbour_list.MyNeighbourRecyclerViewAdapter;
 import com.openclassrooms.entrevoisins.ui.neighbour_list.NeighbourFragment;
 
@@ -26,25 +29,30 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
         TextView aPropos_txt;
         @BindView(R.id.activity_profile_favoris_imageButton)
          ImageButton favButton;
+
+        private Neighbour neighbour;
+        private NeighbourApiService neighbourApiService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_neighbour);
         ButterKnife.bind(this);
 
-
-        nomInfos_txt = findViewById(R.id.activity_profile_nomInfos_text);
-        description_txt = findViewById(R.id.activity_profile_description_text);
-        aPropos_txt = findViewById(R.id.aPropos_txt);
-        favButton = findViewById(R.id.activity_profile_favoris_imageButton);
+        neighbourApiService = DI.getNeighbourApiService();
 
 
-        Intent intent = getIntent();
+
+        int idIntent = getIntent().getIntExtra("$CONTACT$", 0);
+
+         neighbour = neighbourApiService.get1Neighbour(idIntent);
+
+        System.out.println("Profile appartenant à : " + neighbour);
         // Retrouver le contactt entier depuis l'ID entier
 
-        int id = intent.getIntExtra(MyNeighbourRecyclerViewAdapter.CONTACT_BUNDLE,0);
-        nomAvatar_txt = nomInfos_txt;
-        nomInfos_txt.setText(intent.getStringExtra(MyNeighbourRecyclerViewAdapter.CONTACT_BUNDLE));
+        //int id = idIntent.getIntExtra(MyNeighbourRecyclerViewAdapter.CONTACT_BUNDLE,0);
+
+       // nomInfos_txt.setText(idIntent.getStringExtra(MyNeighbourRecyclerViewAdapter.CONTACT_BUNDLE));
 
         //avatar_img.setImageResource(...);
     }
