@@ -81,7 +81,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                 EventBus.getDefault().post(new AddFavNeighbourEvent());
 
                 //TODO : Add to Liste Favoris
-                System.out.println("---------------------------");
+                System.out.println("----------------------------");
                 if(!neighbour.getFavoris()) {
 
                     neighbour.setFavoris(true);
