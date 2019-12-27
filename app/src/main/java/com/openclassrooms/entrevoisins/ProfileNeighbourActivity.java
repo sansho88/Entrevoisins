@@ -3,6 +3,7 @@ package com.openclassrooms.entrevoisins;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,6 +31,8 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
         @BindView(R.id.activity_profile_favoris_imageButton)
          ImageButton favButton;
 
+        //TODO:Créer le bouton de retour en arrière
+
         private Neighbour neighbour;
         private NeighbourApiService neighbourApiService;
 
@@ -43,18 +46,30 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
 
 
 
-        int idIntent = getIntent().getIntExtra("$CONTACT$", 0);
+        int idIntent = (getIntent().getIntExtra("$CONTACT$", 0))-1;
          neighbour = neighbourApiService.get1Neighbour(idIntent);
-        System.out.println("Profile appartenant à : " + neighbour); //TODO: Doit afficher le bon contact
+
+
+         //Erreur: retourne id+1
+        System.out.println("Profil appartenant à : " + neighbour.getName()+ "; ID: " + neighbour.getId() + "; idIntent: " + idIntent); //TODO: Doit afficher le bon contact
 
         //TODO: Affecter chaque view à son élément du contact correspondant
 
-        // Retrouver le contactt entier depuis l'ID entier
-
-        //int id = idIntent.getIntExtra(MyNeighbourRecyclerViewAdapter.CONTACT_BUNDLE,0);
-
-       // nomInfos_txt.setText(idIntent.getStringExtra(MyNeighbourRecyclerViewAdapter.CONTACT_BUNDLE));
-
+        nomAvatar_txt.setText(neighbour.getName());
+        nomInfos_txt.setText(nomAvatar_txt.getText());
+        description_txt.setText("ID du profil: " + neighbour.getId() + "\nDans les favoris?: " + neighbour.getFavoris());
+        //TODO: Afficher la photo du profil
         //avatar_img.setImageResource(...);
+
+        //Todo: faire en sorte que le bouton Favoris soit fonctionnel à 100% (ajouter aux favoris une fois le bouton cliqué)
+        if (neighbour.getFavoris())
+            favButton.setBackgroundColor(0xFF00AAAA);
+        else
+            favButton.setBackgroundColor(0x00);
+
+
+
     }
+
+
 }

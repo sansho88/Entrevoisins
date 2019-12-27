@@ -101,7 +101,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("Profil cliqué!: " + holder.mNeighbourName.getText() + "\nID du profil:  ");
+                System.out.println("Profil cliqué!: " + holder.mNeighbourName.getText());
 
                  Intent contactIntent = new Intent(mContext, ProfileNeighbourActivity.class); //paramétrer l'activité
                 //TODO Afficher le profil
