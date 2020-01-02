@@ -8,11 +8,15 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 import com.openclassrooms.entrevoisins.ui.neighbour_list.MyNeighbourRecyclerViewAdapter;
 import com.openclassrooms.entrevoisins.ui.neighbour_list.NeighbourFragment;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,7 +32,7 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
         TextView description_txt;
         @BindView(R.id.aPropos_txt)
         TextView aPropos_txt;
-        @BindView(R.id.activity_profile_favoris_imageButton)
+        @BindView(R.id.activity_profile_favoris_floatingButton)
          ImageButton favButton;
 
         //TODO:Créer le bouton de retour en arrière
@@ -49,27 +53,23 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
         int idIntent = (getIntent().getIntExtra("$CONTACT$", 0))-1;
          neighbour = neighbourApiService.get1Neighbour(idIntent);
 
+        //System.out.println("Profil appartenant à : " + neighbour.getName()+ "; ID: " + neighbour.getId() + "; idIntent: " + idIntent);
 
-         //Erreur: retourne id+1
-        System.out.println("Profil appartenant à : " + neighbour.getName()+ "; ID: " + neighbour.getId() + "; idIntent: " + idIntent); //TODO: Doit afficher le bon contact
-
-        //TODO: Affecter chaque view à son élément du contact correspondant
-
+        // Affecte chaque view à son élément du contact correspondant
         nomAvatar_txt.setText(neighbour.getName());
         nomInfos_txt.setText(nomAvatar_txt.getText());
         description_txt.setText("ID du profil: " + neighbour.getId() + "\nDans les favoris?: " + neighbour.getFavoris());
-        //TODO: Afficher la photo du profil
-        //avatar_img.setImageResource(...);
+
+        //Affiche la photo du profil
+        Glide.with(this).load(neighbour.getAvatarUrl()).into(avatar_img);
 
         //Todo: faire en sorte que le bouton Favoris soit fonctionnel à 100% (ajouter aux favoris une fois le bouton cliqué)
         if (neighbour.getFavoris())
             favButton.setBackgroundColor(0xFF00AAAA);
         else
             favButton.setBackgroundColor(0x00);
-
-
-
     }
+    //TODO: Ajuster le visuel du bouton Favoris
 
 
 }
