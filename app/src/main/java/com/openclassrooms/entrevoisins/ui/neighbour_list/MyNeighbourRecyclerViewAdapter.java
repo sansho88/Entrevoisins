@@ -79,15 +79,13 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             @Override
             public void onClick(View bouton) {
 
-                Intent favorisIntent = new Intent();
+
                 EventBus.getDefault().post(new AddFavNeighbourEvent(neighbour));
 
                 //Add to Liste Favoris
                 System.out.println("----------------------------");
                 System.out.println(neighbour.getName() + " est dans les favoris? " + neighbour.getFavoris());
-                if (neighbour.getFavoris())
-                    favorisIntent.putExtra(neighbour.toString(),0);
-                else favorisIntent.removeExtra(neighbour.toString());
+
                 System.out.println("----------------------------");
 
 
@@ -104,7 +102,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                 System.out.println("Profil cliqué!: " + holder.mNeighbourName.getText());
 
                  Intent contactIntent = new Intent(mContext, ProfileNeighbourActivity.class); //paramétrer l'activité
-                //TODO Afficher le profil
+                //Affiche le profil
 
                 contactIntent.putExtra("$CONTACT$", neighbour.getId());
                 System.out.println("ID du contact: " + contactIntent.getIntExtra("$CONTACT$",0));

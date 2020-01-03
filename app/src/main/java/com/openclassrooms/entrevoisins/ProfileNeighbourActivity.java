@@ -1,6 +1,10 @@
 package com.openclassrooms.entrevoisins;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.DrawableRes;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,10 +15,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.di.DI;
+import com.openclassrooms.entrevoisins.events.AddFavNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 import com.openclassrooms.entrevoisins.ui.neighbour_list.MyNeighbourRecyclerViewAdapter;
 import com.openclassrooms.entrevoisins.ui.neighbour_list.NeighbourFragment;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 
@@ -33,7 +40,10 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
         @BindView(R.id.aPropos_txt)
         TextView aPropos_txt;
         @BindView(R.id.activity_profile_favoris_floatingButton)
-         ImageButton favButton;
+        FloatingActionButton favButton;
+        @BindView(R.id.activity_profile_back)
+        FloatingActionButton backButton;
+
 
         //TODO:Créer le bouton de retour en arrière
 
@@ -63,13 +73,32 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
         //Affiche la photo du profil
         Glide.with(this).load(neighbour.getAvatarUrl()).into(avatar_img);
 
-        //Todo: faire en sorte que le bouton Favoris soit fonctionnel à 100% (ajouter aux favoris une fois le bouton cliqué)
+        //Ajuste le visuel du bouton Favoris
         if (neighbour.getFavoris())
-            favButton.setBackgroundColor(0xFF00AAAA);
-        else
-            favButton.setBackgroundColor(0x00);
+            favButton.setImageResource(R.drawable.ic_star_white_24dp);
+
+        favButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EventBus.getDefault().post(new AddFavNeighbourEvent(neighbour));
+
+                finish();
+                overridePendingTransition(0,0);
+                startActivity(getIntent());
+                overridePendingTransition(0,0);
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+
     }
-    //TODO: Ajuster le visuel du bouton Favoris
+
 
 
 }
