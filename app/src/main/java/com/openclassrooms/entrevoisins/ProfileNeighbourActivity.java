@@ -22,6 +22,7 @@ import com.openclassrooms.entrevoisins.ui.neighbour_list.MyNeighbourRecyclerView
 import com.openclassrooms.entrevoisins.ui.neighbour_list.NeighbourFragment;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
 
@@ -40,9 +41,9 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
         @BindView(R.id.aPropos_txt)
         TextView aPropos_txt;
         @BindView(R.id.activity_profile_favoris_floatingButton)
-        FloatingActionButton favButton;
+        ImageButton favButton;
         @BindView(R.id.activity_profile_back)
-        FloatingActionButton backButton;
+        ImageButton backButton;
 
 
         //TODO:Créer le bouton de retour en arrière
@@ -57,38 +58,43 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         neighbourApiService = DI.getNeighbourApiService();
-
-
-
         int idIntent = (getIntent().getIntExtra("$CONTACT$", 0))-1;
-         neighbour = neighbourApiService.get1Neighbour(idIntent);
+        neighbour = neighbourApiService.get1Neighbour(idIntent); //En résumé (un peu dégueu'): get1neighbour(int id)  = List<Neighbour>.get(id);
+
 
         //System.out.println("Profil appartenant à : " + neighbour.getName()+ "; ID: " + neighbour.getId() + "; idIntent: " + idIntent);
 
-        // Affecte chaque view à son élément du contact correspondant
+        /**
+         * Affecte chaque view à son élément du contact correspondant
+          */
         nomAvatar_txt.setText(neighbour.getName());
         nomInfos_txt.setText(nomAvatar_txt.getText());
         description_txt.setText("ID du profil: " + neighbour.getId() + "\nDans les favoris?: " + neighbour.getFavoris());
 
-        //Affiche la photo du profil
+        /**
+         * Affiche la photo du profil
+         */
         Glide.with(this).load(neighbour.getAvatarUrl()).into(avatar_img);
 
-        //Ajuste le visuel du bouton Favoris
-        if (neighbour.getFavoris())
-            favButton.setImageResource(R.drawable.ic_star_white_24dp);
 
+        /**
+         *Ajuste le visuel du bouton Favoris
+         */
+        favState();
+
+        /**
+         * Ajoute le contact aux favoris grace à l'étoile jaune
+         */
         favButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EventBus.getDefault().post(new AddFavNeighbourEvent(neighbour));
-
-                finish();
-                overridePendingTransition(0,0);
-                startActivity(getIntent());
-                overridePendingTransition(0,0);
+                onAddFavNeighbour();
             }
         });
 
+        /**
+         * Retour en arrière
+         */
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,6 +104,33 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
 
 
     }
+    //TODO: Faire en sorte que les Subscribe rafraichissent le statut du Favoris
+    @Subscribe
+    void onAddFavNeighbour() {
+        EventBus.getDefault().post(new AddFavNeighbourEvent(neighbour));
+
+    }
+
+    @Subscribe
+    void favState(){
+        if (neighbour.getFavoris()) {
+            favButton.setImageResource(R.drawable.ic_star_white_24dp);
+        }
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+ //       EventBus.getDefault().register(this); //(crash de l'appli')
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+   //     EventBus.getDefault().unregister(this);  //(crash de l'appli')
+    }
+
+    //@Subscribe
+    //AddFavNeighbourEvent
 
 
 

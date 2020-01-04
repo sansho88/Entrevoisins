@@ -52,11 +52,12 @@
         android:layout_marginTop="18dp"
         android:background="@color/white"
         android:gravity="bottom"
-        android:paddingBottom="5dp"
         android:paddingStart="8dp"
+        android:paddingBottom="5dp"
         android:text="$NOM$"
-        android:textStyle="bold"
+        android:textColor="#FF000000"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,6 +70,7 @@
         android:layout_marginTop="24dp"
         android:background="@color/white"
         android:text="A propos de moi"
+        android:textColor="#FF000000"
         android:textSize="25sp"
         android:gravity="bottom"
         android:paddingBottom="2dp"
@@ -92,34 +94,47 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_aproposdemoi_pasToucher" />
 
-    <android.support.design.widget.FloatingActionButton
+    <ImageButton
         android:id="@+id/activity_profile_favoris_floatingButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
         android:clickable="true"
         android:outlineAmbientShadowColor="@color/transparent"
         app:backgroundTint="@color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/activity_profile_nomInfos_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.413"
-        app:maxImageSize="90px"
+
+        app:layout_constraintTop_toBottomOf="@+id/activity_profile_avatar_image"
+        app:layout_constraintVertical_bias="0.431"
         app:srcCompat="@drawable/ic_star_border_white_24dp" />
 
-    <android.support.design.widget.FloatingActionButton
+    <ImageButton
         android:id="@+id/activity_profile_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:clickable="true"
         app:backgroundTint="@color/transparent"
         app:layout_constraintStart_toStartOf="parent"
 
         app:layout_constraintTop_toTopOf="parent"
-        app:maxImageSize="80px"
+
         app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" >
+
+    </LinearLayout>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="409dp"
+        android:layout_height="128dp"
+        android:layout_marginBottom="28dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aPropos_txt"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </android.support.constraint.ConstraintLayout>

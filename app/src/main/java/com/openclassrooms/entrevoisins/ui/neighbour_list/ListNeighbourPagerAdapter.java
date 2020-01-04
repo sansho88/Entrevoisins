@@ -18,6 +18,7 @@ public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public Fragment getItem(int position) {
+        //utiliser Switch avec position (position0 = onglet1, position 1 = onglet2)
         return NeighbourFragment.newInstance();
     }
 
@@ -27,6 +28,6 @@ public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public int getCount() {
-        return 1;
+        return 2;
     }
 }

@@ -27,7 +27,7 @@ public interface NeighbourApiService {
      * Ajoute le voisin aux favoris
      * @param neighbour
      */
-    void addFavNeighbour (Neighbour neighbour);
+    void addFavNeighbour(Neighbour neighbour);
 
     /**
      * Get all my Neighbours

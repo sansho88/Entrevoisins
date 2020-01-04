@@ -111,6 +111,7 @@ public class NeighbourFragment extends Fragment {
     public void onAddFavNeighbour(AddFavNeighbourEvent evennement){
         mRecyclerView.getAdapter().notifyDataSetChanged();
         System.out.println("onAddFavNeighbour utilisé");
+
     }
 
 }
