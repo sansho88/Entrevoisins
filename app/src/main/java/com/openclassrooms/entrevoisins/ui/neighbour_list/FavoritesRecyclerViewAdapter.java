@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.events.AddFavNeighbourEvent;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
@@ -53,7 +54,8 @@ public class FavoritesRecyclerViewAdapter extends RecyclerView.Adapter<Favorites
             @Override
             public void onClick(View v) {
                 //TODO: Supprimer le voisin des favoris
-                //EventBus.getDefault().post(new DeleteFavNeighbourEvent(favNeighbour));
+                //Normalement le statut est changé, donc il est enlevé de la liste
+                EventBus.getDefault().post(new AddFavNeighbourEvent(favNeighbour));
             }
         });
 

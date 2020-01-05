@@ -18,12 +18,21 @@ public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public Fragment getItem(int position) {
-        //utiliser Switch avec position (position0 = onglet1, position 1 = onglet2)
-        return NeighbourFragment.newInstance();
+        //TODO: Faire en sorte que l'onglet selectionné soit bien récupéré
+        Fragment fragment;
+
+
+        switch(position){
+            default: fragment= NeighbourFragment.newInstance();
+                System.out.println("Onglet My Neighbours  selectionné"); break;
+            case 2: fragment= FavFragment.newInstance();
+                System.out.println("Onglet Favoris selectionné");break;
+        }
+        return fragment;
     }
 
     /**
-     * get the number of pages
+     * get the number of tabs
      * @return
      */
     @Override

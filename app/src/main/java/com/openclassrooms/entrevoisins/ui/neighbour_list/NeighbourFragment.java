@@ -32,6 +32,7 @@ public class NeighbourFragment extends Fragment {
 
     private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
+    private List<Neighbour> mFavNeighbours;
     private RecyclerView mRecyclerView;
 
 
@@ -81,6 +82,18 @@ public class NeighbourFragment extends Fragment {
         mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(getContext(), mNeighbours));
     }
 
+    private void initFavList() { // <!>A invoquer à condition que la liste mNeighbours !=null
+        mNeighbours = mApiService.getNeighbours();
+
+
+            for (Neighbour voisin : mNeighbours) {
+                if (voisin.getFavoris()) mFavNeighbours.add(voisin);
+            }
+            mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(getContext(), mFavNeighbours));
+            System.out.println("Nombre de favoris: " + mFavNeighbours.size());
+
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -97,11 +110,14 @@ public class NeighbourFragment extends Fragment {
      * Fired if the user clicks on a delete button
      * @param event
      */
+
     @Subscribe
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
         mApiService.deleteNeighbour(event.neighbour);
         initList();
     }
+
+
 
     /**
      * Quand l'utilisateur clique sur le bouton "Favoris"
@@ -110,6 +126,8 @@ public class NeighbourFragment extends Fragment {
     @Subscribe
     public void onAddFavNeighbour(AddFavNeighbourEvent evennement){
         mRecyclerView.getAdapter().notifyDataSetChanged();
+
+        initFavList();
         System.out.println("onAddFavNeighbour utilisé");
 
     }

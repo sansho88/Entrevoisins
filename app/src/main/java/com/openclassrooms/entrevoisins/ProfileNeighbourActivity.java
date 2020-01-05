@@ -45,8 +45,7 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
         @BindView(R.id.activity_profile_back)
         ImageButton backButton;
 
-
-        //TODO:Créer le bouton de retour en arrière
+        //TODO: Transformer les textView en CardView
 
         private Neighbour neighbour;
         private NeighbourApiService neighbourApiService;
