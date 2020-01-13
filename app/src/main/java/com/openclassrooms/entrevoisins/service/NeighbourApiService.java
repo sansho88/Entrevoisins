@@ -33,7 +33,7 @@ public interface NeighbourApiService {
      * Get all my Neighbours
      * @return {@link List}
      */
-    List<Neighbour> getFav();
+
 
     /**
      * Deletes a neighbour from favorites
@@ -41,6 +41,12 @@ public interface NeighbourApiService {
      */
     void deleteFav(Neighbour neighbour);
 
-
+    /**
+     * = List<Neighbour>.get(id);
+     * @param numId
+     * @return
+     */
     Neighbour get1Neighbour(int numId);
+
+    List<Neighbour> getFavNeighbours();
 }

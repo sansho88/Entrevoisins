@@ -3,10 +3,6 @@ package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Context;
 import android.content.Intent;
-
-
-import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +19,7 @@ import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.events.AddFavNeighbourEvent;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
-import com.openclassrooms.entrevoisins.service.DummyNeighbourApiService;
+
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -32,7 +28,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static android.support.v4.content.ContextCompat.startActivity;
 
 public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeighbourRecyclerViewAdapter.ViewHolder>  {
 
@@ -75,16 +70,19 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
 
             }
         });
+        /**
+         * Ajoute le contact dans l'onglet "Favorite"
+         */
         holder.mFavButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View bouton) {
 
-
+                //Add to Liste Favoris
                 EventBus.getDefault().post(new AddFavNeighbourEvent(neighbour));
 
-                //Add to Liste Favoris
+
                 System.out.println("----------------------------");
-                System.out.println(neighbour.getName() + " est dans les favoris? " + neighbour.getFavoris());
+                System.out.println(neighbour.getName() + " est dans les favoris? " + neighbour.getFavoris() );
 
                 System.out.println("----------------------------");
 
@@ -101,10 +99,10 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             public void onClick(View view) {
                 System.out.println("Profil cliqué!: " + holder.mNeighbourName.getText());
 
-                 Intent contactIntent = new Intent(mContext, ProfileNeighbourActivity.class); //paramétrer l'activité
+                 Intent contactIntent = new Intent(mContext, ProfileNeighbourActivity.class);
                 //Affiche le profil
 
-                contactIntent.putExtra("$CONTACT$", neighbour.getId());
+                contactIntent.putExtra("$CONTACT$", position);
                 System.out.println("ID du contact: " + contactIntent.getIntExtra("$CONTACT$",0));
                 mContext.startActivity(contactIntent);
 

@@ -36,10 +36,9 @@ public class NeighbourFragment extends Fragment {
     private RecyclerView mRecyclerView;
 
 
-
-
     /**
      * Create and return a new instance
+     *
      * @return @{@link NeighbourFragment}
      */
     public static NeighbourFragment newInstance() {
@@ -65,13 +64,9 @@ public class NeighbourFragment extends Fragment {
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         initList();
 
-        //Neighbour neighbour = mNeighbours.get(view.getId());
-
 
         return view;
     }
-
-
 
 
     /**
@@ -80,18 +75,6 @@ public class NeighbourFragment extends Fragment {
     private void initList() {
         mNeighbours = mApiService.getNeighbours();
         mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(getContext(), mNeighbours));
-    }
-
-    private void initFavList() { // <!>A invoquer à condition que la liste mNeighbours !=null
-        mNeighbours = mApiService.getNeighbours();
-
-
-            for (Neighbour voisin : mNeighbours) {
-                if (voisin.getFavoris()) mFavNeighbours.add(voisin);
-            }
-            mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(getContext(), mFavNeighbours));
-            System.out.println("Nombre de favoris: " + mFavNeighbours.size());
-
     }
 
     @Override
@@ -108,6 +91,7 @@ public class NeighbourFragment extends Fragment {
 
     /**
      * Fired if the user clicks on a delete button
+     *
      * @param event
      */
 
@@ -117,19 +101,5 @@ public class NeighbourFragment extends Fragment {
         initList();
     }
 
-
-
-    /**
-     * Quand l'utilisateur clique sur le bouton "Favoris"
-     * @param evennement
-     */
-    @Subscribe
-    public void onAddFavNeighbour(AddFavNeighbourEvent evennement){
-        mRecyclerView.getAdapter().notifyDataSetChanged();
-
-        initFavList();
-        System.out.println("onAddFavNeighbour utilisé");
-
-    }
 
 }

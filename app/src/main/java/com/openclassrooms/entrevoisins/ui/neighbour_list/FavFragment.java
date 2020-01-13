@@ -31,10 +31,9 @@ public class FavFragment extends Fragment {
     private RecyclerView mRecyclerView;
 
 
-
-
     /**
      * Create and return a new instance
+     *
      * @return @{@link FavFragment}
      */
     public static FavFragment newInstance() {
@@ -60,41 +59,21 @@ public class FavFragment extends Fragment {
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
 
-        initFavList();
-         if(!mFavNeighbours.isEmpty())
-                    initFavList();
-        else System.out.println("Liste de favoris vide");
-        //Neighbour neighbour = mNeighbours.get(view.getId());
+        initList();
 
 
         return view;
     }
 
 
-
-
     /**
      * Init the List of neighbours
      */
     private void initList() {
-        mNeighbours = mApiService.getNeighbours();
-        //mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(getContext(), mNeighbours));
+        mNeighbours = mApiService.getFavNeighbours();
+        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(getContext(), mNeighbours));
     }
 
-    private void initFavList() { // <!>A invoquer à condition que la liste mNeighbours !=null
-        initList();
-        mFavNeighbours= mNeighbours;
-        mFavNeighbours.clear();
-
-
-            for (Neighbour voisin : mFavNeighbours) {
-                if (voisin.getFavoris()) mFavNeighbours.add(voisin);
-            }
-            mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(getContext(), mFavNeighbours));
-
-            System.out.println("Nombre de favoris: " + mFavNeighbours.size());
-
-    }
 
     @Override
     public void onStart() {
@@ -110,6 +89,7 @@ public class FavFragment extends Fragment {
 
     /**
      * Fired if the user clicks on a delete button
+     *
      * @param event
      */
 
@@ -120,16 +100,20 @@ public class FavFragment extends Fragment {
     }
 
 
-
     /**
-     * Quand l'utilisateur clique sur le bouton "Favoris"
+     * Quand l'utilisateur clique sur le bouton "Favoris":
+     * le voisin est ajouté à l'onglet "Favorites"
+     *
      * @param evennement
      */
     @Subscribe
-    public void onAddFavNeighbour(AddFavNeighbourEvent evennement){
+    public void onAddFavNeighbour(AddFavNeighbourEvent evennement) {
+        if (evennement.mNeighbour.getFavoris())
+            mNeighbours.add(evennement.mNeighbour);
+        else mNeighbours.remove(evennement.mNeighbour);
         mRecyclerView.getAdapter().notifyDataSetChanged();
 
-        initFavList();
+
         System.out.println("onAddFavNeighbour utilisé");
 
     }

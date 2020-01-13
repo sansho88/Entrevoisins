@@ -57,7 +57,7 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         neighbourApiService = DI.getNeighbourApiService();
-        int idIntent = (getIntent().getIntExtra("$CONTACT$", 0))-1;
+        int idIntent = (getIntent().getIntExtra("$CONTACT$", 0));
         neighbour = neighbourApiService.get1Neighbour(idIntent); //En résumé (un peu dégueu'): get1neighbour(int id)  = List<Neighbour>.get(id);
 
 
@@ -107,6 +107,7 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
     @Subscribe
     void onAddFavNeighbour() {
         EventBus.getDefault().post(new AddFavNeighbourEvent(neighbour));
+        System.out.println("Modification du favoris depuis le profil");
 
     }
 
