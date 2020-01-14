@@ -18,6 +18,8 @@ import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.AddFavNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
+import com.openclassrooms.entrevoisins.ui.neighbour_list.FavFragment;
+import com.openclassrooms.entrevoisins.ui.neighbour_list.FavoritesRecyclerViewAdapter;
 import com.openclassrooms.entrevoisins.ui.neighbour_list.MyNeighbourRecyclerViewAdapter;
 import com.openclassrooms.entrevoisins.ui.neighbour_list.NeighbourFragment;
 
@@ -30,25 +32,24 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ProfileNeighbourActivity extends AppCompatActivity {
-        @BindView(R.id.activity_profile_avatar_image)
-         ImageView avatar_img;
-        @BindView(R.id.activity_profile_nomAvatar_text)
-         TextView  nomAvatar_txt;
-        @BindView(R.id.activity_profile_nomInfos_text)
-         TextView nomInfos_txt;
-        @BindView(R.id.activity_profile_description_text)
-        TextView description_txt;
-        @BindView(R.id.aPropos_txt)
-        TextView aPropos_txt;
-        @BindView(R.id.activity_profile_favoris_floatingButton)
-        ImageButton favButton;
-        @BindView(R.id.activity_profile_back)
-        ImageButton backButton;
+    @BindView(R.id.activity_profile_avatar_image)
+    ImageView avatar_img;
+    @BindView(R.id.activity_profile_nomAvatar_text)
+    TextView nomAvatar_txt;
+    @BindView(R.id.activity_profile_nomInfos_text)
+    TextView nomInfos_txt;
+    @BindView(R.id.activity_profile_description_text)
+    TextView description_txt;
+    @BindView(R.id.aPropos_txt)
+    TextView aPropos_txt;
+    @BindView(R.id.activity_profile_favoris_floatingButton)
+    ImageButton favButton;
+    @BindView(R.id.activity_profile_back)
+    ImageButton backButton;
 
-        //TODO: Transformer les textView en CardView
 
-        private Neighbour neighbour;
-        private NeighbourApiService neighbourApiService;
+    private Neighbour neighbour;
+    private NeighbourApiService neighbourApiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +66,7 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
 
         /**
          * Affecte chaque view à son élément du contact correspondant
-          */
+         */
         nomAvatar_txt.setText(neighbour.getName());
         nomInfos_txt.setText(nomAvatar_txt.getText());
         description_txt.setText("ID du profil: " + neighbour.getId() + "\nDans les favoris?: " + neighbour.getFavoris());
@@ -87,7 +88,7 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
         favButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onAddFavNeighbour();
+                onAddFavNeighbour(neighbour);
             }
         });
 
@@ -103,35 +104,40 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
 
 
     }
-    //TODO: Faire en sorte que les Subscribe rafraichissent le statut du Favoris
+
     @Subscribe
-    void onAddFavNeighbour() {
-        EventBus.getDefault().post(new AddFavNeighbourEvent(neighbour));
+    public void onAddFavNeighbour(Neighbour neighbour) {
+        new AddFavNeighbourEvent(neighbour);
+
+        //TODO: Actualiser l'onglet "Favorites" (actuallement rafraichi après une suppression de contact)
         System.out.println("Modification du favoris depuis le profil");
 
+
     }
 
+    //TODO: Faire en sorte que les Subscribe rafraichissent le statut du Favoris
     @Subscribe
-    void favState(){
+    void favState() {
         if (neighbour.getFavoris()) {
             favButton.setImageResource(R.drawable.ic_star_white_24dp);
+            System.out.println("Objets Neighbours en favoris: " + neighbourApiService.getFavNeighbours());
         }
     }
+
     @Override
     public void onStart() {
         super.onStart();
- //       EventBus.getDefault().register(this); //(crash de l'appli')
+        //       EventBus.getDefault().register(this); //(crash de l'appli')
     }
 
     @Override
     public void onStop() {
         super.onStop();
-   //     EventBus.getDefault().unregister(this);  //(crash de l'appli')
+        //     EventBus.getDefault().unregister(this);  //(crash de l'appli')
     }
 
     //@Subscribe
     //AddFavNeighbourEvent
-
 
 
 }

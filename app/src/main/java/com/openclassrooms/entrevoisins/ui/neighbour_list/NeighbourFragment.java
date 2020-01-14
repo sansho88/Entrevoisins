@@ -32,7 +32,6 @@ public class NeighbourFragment extends Fragment {
 
     private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
-    private List<Neighbour> mFavNeighbours;
     private RecyclerView mRecyclerView;
 
 

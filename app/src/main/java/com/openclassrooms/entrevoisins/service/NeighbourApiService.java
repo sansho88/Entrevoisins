@@ -29,11 +29,6 @@ public interface NeighbourApiService {
      */
     void addFavNeighbour(Neighbour neighbour);
 
-    /**
-     * Get all my Neighbours
-     * @return {@link List}
-     */
-
 
     /**
      * Deletes a neighbour from favorites

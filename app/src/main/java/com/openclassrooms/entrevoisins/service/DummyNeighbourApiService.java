@@ -49,8 +49,8 @@ public class DummyNeighbourApiService implements NeighbourApiService {
             if (voisin.getFavoris() && !listFav.contains(voisin))
                  listFav.add(voisin);
             else deleteFav(voisin);
-        }
 
+        }
         return listFav;
     }
 
