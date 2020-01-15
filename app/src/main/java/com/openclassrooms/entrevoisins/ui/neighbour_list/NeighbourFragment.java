@@ -100,5 +100,11 @@ public class NeighbourFragment extends Fragment {
         initList();
     }
 
+    @Subscribe
+    public void onAddFavNeighbour(AddFavNeighbourEvent event){
+        //mApiService.addFavNeighbour(event.mNeighbour);
+        initList();
+    }
+
 
 }

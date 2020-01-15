@@ -1,10 +1,5 @@
 package com.openclassrooms.entrevoisins;
 
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.support.annotation.DrawableRes;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,20 +8,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.AddFavNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
-import com.openclassrooms.entrevoisins.ui.neighbour_list.FavFragment;
-import com.openclassrooms.entrevoisins.ui.neighbour_list.FavoritesRecyclerViewAdapter;
-import com.openclassrooms.entrevoisins.ui.neighbour_list.MyNeighbourRecyclerViewAdapter;
-import com.openclassrooms.entrevoisins.ui.neighbour_list.NeighbourFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,17 +47,18 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
 
         neighbourApiService = DI.getNeighbourApiService();
         int idIntent = (getIntent().getIntExtra("$CONTACT$", 0));
-        neighbour = neighbourApiService.get1Neighbour(idIntent); //En résumé (un peu dégueu'): get1neighbour(int id)  = List<Neighbour>.get(id);
+        //TODO: Corretcion bug: après suppression contact, l'id du contact récupéré est égal à la position initiale avant suppression (mais l'iD intent est correct)
+        neighbour = neighbourApiService.get1Neighbour(idIntent - 1);
 
 
-        //System.out.println("Profil appartenant à : " + neighbour.getName()+ "; ID: " + neighbour.getId() + "; idIntent: " + idIntent);
+        System.out.println("Profil appartenant à : " + neighbour.getName() + "; ID: " + neighbour.getId() + "; idIntent: " + idIntent);
 
         /**
          * Affecte chaque view à son élément du contact correspondant
          */
         nomAvatar_txt.setText(neighbour.getName());
         nomInfos_txt.setText(nomAvatar_txt.getText());
-        description_txt.setText("ID du profil: " + neighbour.getId() + "\nDans les favoris?: " + neighbour.getFavoris());
+        description_txt.setText("ID du profil: " + neighbour.getId() + "\nDans les favoris? " + neighbour.getFavoris() + "\nID Intent: " + idIntent);
 
         /**
          * Affiche la photo du profil
@@ -107,7 +96,7 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
 
     @Subscribe
     public void onAddFavNeighbour(Neighbour neighbour) {
-        new AddFavNeighbourEvent(neighbour);
+        EventBus.getDefault().post(new AddFavNeighbourEvent(neighbour));
 
         //TODO: Actualiser l'onglet "Favorites" (actuallement rafraichi après une suppression de contact)
         System.out.println("Modification du favoris depuis le profil");

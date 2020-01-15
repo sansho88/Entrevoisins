@@ -102,8 +102,8 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                  Intent contactIntent = new Intent(mContext, ProfileNeighbourActivity.class);
                 //Affiche le profil
 
-                contactIntent.putExtra("$CONTACT$", position);
-                System.out.println("ID du contact: " + contactIntent.getIntExtra("$CONTACT$",0));
+                contactIntent.putExtra("$CONTACT$", neighbour.getId());
+                System.out.println("ID du contact: " + contactIntent.getIntExtra("$CONTACT$",position));
                 mContext.startActivity(contactIntent);
 
             }
@@ -127,6 +127,8 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         public ImageButton mDeleteButton;
         @BindView (R.id.item_list_fav_button)
         public CheckBox mFavButton;
+
+
 
         public ViewHolder(View view) {
             super(view);

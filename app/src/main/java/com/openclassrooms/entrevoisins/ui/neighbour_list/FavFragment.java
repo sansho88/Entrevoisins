@@ -81,6 +81,12 @@ public class FavFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        initList();
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
@@ -107,10 +113,13 @@ public class FavFragment extends Fragment {
      */
     @Subscribe
     public void onAddFavNeighbour(AddFavNeighbourEvent evennement) {
-        if (evennement.mNeighbour.getFavoris())
+        /* if (evennement.mNeighbour.getFavoris())
             mNeighbours.add(evennement.mNeighbour);
         else mNeighbours.remove(evennement.mNeighbour);
-        mRecyclerView.getAdapter().notifyDataSetChanged();
+        mRecyclerView.getAdapter().notifyDataSetChanged(); */
+
+       // mApiService.addFavNeighbour(evennement.mNeighbour);
+        initList();
 
 
         System.out.println("onAddFavNeighbour utilisé");
