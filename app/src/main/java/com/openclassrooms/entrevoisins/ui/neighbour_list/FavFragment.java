@@ -70,7 +70,7 @@ public class FavFragment extends Fragment {
      */
     private void initList() {
         mNeighbours = mApiService.getFavNeighbours();
-        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(getContext(), mNeighbours));
+        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours));
     }
 
 

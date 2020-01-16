@@ -19,6 +19,7 @@ import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.events.AddFavNeighbourEvent;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
+import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
 
 import org.greenrobot.eventbus.EventBus;
@@ -31,18 +32,14 @@ import butterknife.ButterKnife;
 
 public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeighbourRecyclerViewAdapter.ViewHolder>  {
 
-    private final List<Neighbour> mNeighbours;
-    private Context mContext;
+    private List<Neighbour> mNeighbours;
     public static final String CONTACT_BUNDLE = "$CONTACT$";
 
 
-
-    public MyNeighbourRecyclerViewAdapter(Context context, List<Neighbour> items) {
+    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items) {
         mNeighbours = items;
-        mContext = context;
+
     }
-
-
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -54,8 +51,10 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        Neighbour neighbour;
-        neighbour = mNeighbours.get(position);
+        Neighbour neighbour = mNeighbours.get(position);
+
+
+
         holder.mNeighbourName.setText(neighbour.getName());
 
         Glide.with(holder.mNeighbourAvatar.getContext())
@@ -92,18 +91,19 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         });
 
         /**
-         * Quand cliqué, le profil détaillé correspondant à la personne s'affichera
+         * Quand cliqué, le profil détaillé correspondant à la personne s'affiche
          */
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("Profil cliqué!: " + holder.mNeighbourName.getText());
+                Context mContext = holder.itemView.getContext();
+                int neighbourId = neighbour.getId();
 
-                 Intent contactIntent = new Intent(mContext, ProfileNeighbourActivity.class);
-                //Affiche le profil
+                System.out.println("Profil cliqué!: " + holder.mNeighbourName.getText() + ";(" + neighbour.getName() +", ID: " + neighbourId +")");
+                Intent contactIntent = new Intent(mContext, ProfileNeighbourActivity.class);
+                contactIntent.putExtra("$CONTACT$", neighbourId);
 
-                contactIntent.putExtra("$CONTACT$", neighbour.getId());
-                System.out.println("ID du contact: " + contactIntent.getIntExtra("$CONTACT$",position));
+                System.out.println("ID du contact: " + contactIntent.getIntExtra("$CONTACT$",0));
                 mContext.startActivity(contactIntent);
 
             }

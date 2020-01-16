@@ -35,10 +35,12 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
     @BindView(R.id.activity_profile_back)
     ImageButton backButton;
 
+    public static final String CONTACTID = "$CONTACT$";
+
 
     private Neighbour neighbour;
     private NeighbourApiService neighbourApiService;
-
+    private int idIntent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,19 +48,18 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         neighbourApiService = DI.getNeighbourApiService();
-        int idIntent = (getIntent().getIntExtra("$CONTACT$", 0));
-        //TODO: Corretcion bug: après suppression contact, l'id du contact récupéré est égal à la position initiale avant suppression (mais l'iD intent est correct)
-        neighbour = neighbourApiService.get1Neighbour(idIntent - 1);
+        idIntent = getIntent().getIntExtra(CONTACTID, 0);
+        neighbour = neighbourApiService.get1Neighbour(idIntent);
 
 
-        System.out.println("Profil appartenant à : " + neighbour.getName() + "; ID: " + neighbour.getId() + "; idIntent: " + idIntent);
+        System.out.println("Profil appartenant à : " + neighbour.getName() + "; ID: " + neighbour.getId() + "; idIntent: " + idIntent + "; Place dans la liste: " + neighbourApiService.getNeighbours().indexOf(neighbour) );
 
         /**
          * Affecte chaque view à son élément du contact correspondant
          */
         nomAvatar_txt.setText(neighbour.getName());
         nomInfos_txt.setText(nomAvatar_txt.getText());
-        description_txt.setText("ID du profil: " + neighbour.getId() + "\nDans les favoris? " + neighbour.getFavoris() + "\nID Intent: " + idIntent);
+        description_txt.setText("ID du profil: " + neighbour.getId() + "\nID Intent/ ID voulu: " + idIntent + " (" + neighbourApiService.get1Neighbour(idIntent).getName() + ")" + "\nPlace dans la liste: " + neighbourApiService.getNeighbours().indexOf(neighbour));
 
         /**
          * Affiche la photo du profil
@@ -78,6 +79,7 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 onAddFavNeighbour(neighbour);
+                favState();
             }
         });
 
@@ -94,7 +96,7 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
 
     }
 
-    @Subscribe
+    //@Subscribe
     public void onAddFavNeighbour(Neighbour neighbour) {
         EventBus.getDefault().post(new AddFavNeighbourEvent(neighbour));
 
@@ -104,13 +106,12 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
 
     }
 
-    //TODO: Faire en sorte que les Subscribe rafraichissent le statut du Favoris
-    @Subscribe
+
     void favState() {
         if (neighbour.getFavoris()) {
-            favButton.setImageResource(R.drawable.ic_star_white_24dp);
-            System.out.println("Objets Neighbours en favoris: " + neighbourApiService.getFavNeighbours());
-        }
+            favButton.setImageResource(R.drawable.ic_star_white_24dp); //Etoile pleine
+        } else favButton.setImageResource(R.drawable.ic_star_border_white_24dp); //Etoile vide
+
     }
 
     @Override

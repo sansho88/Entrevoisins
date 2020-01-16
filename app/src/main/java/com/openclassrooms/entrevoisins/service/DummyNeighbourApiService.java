@@ -56,10 +56,13 @@ public class DummyNeighbourApiService implements NeighbourApiService {
 
 
     @Override
-    public Neighbour get1Neighbour(int numId) {
-
-        System.out.println("DummyNeighbourApiService | numId= " + numId);
-        return neighbours.get(numId);
+    public Neighbour get1Neighbour(int idIntent) {
+        Neighbour neighbour = getNeighbours().get(0); //Contact par défaut
+        for (Neighbour neighbourOk: neighbours){
+            if (neighbourOk.getId() == idIntent)
+                neighbour = neighbourOk;
+        }
+        return neighbour;
     }
 
 
