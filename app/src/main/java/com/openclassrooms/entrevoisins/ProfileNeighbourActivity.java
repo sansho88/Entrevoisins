@@ -26,8 +26,12 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
     TextView nomAvatar_txt;
     @BindView(R.id.activity_profile_nomInfos_text)
     TextView nomInfos_txt;
-    @BindView(R.id.activity_profile_description_text)
-    TextView description_txt;
+    @BindView(R.id.activity_profile_adresse_text)
+    TextView adresse_txt;
+    @BindView(R.id.activity_profile_tph_text)
+    TextView tph_text;
+    @BindView(R.id.activity_profile_social_text)
+    TextView social_text;
     @BindView(R.id.aPropos_txt)
     TextView aPropos_txt;
     @BindView(R.id.activity_profile_favoris_floatingButton)
@@ -59,7 +63,7 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
          */
         nomAvatar_txt.setText(neighbour.getName());
         nomInfos_txt.setText(nomAvatar_txt.getText());
-        description_txt.setText("ID du profil: " + neighbour.getId() + "\nID Intent/ ID voulu: " + idIntent + " (" + neighbourApiService.get1Neighbour(idIntent).getName() + ")" + "\nPlace dans la liste: " + neighbourApiService.getNeighbours().indexOf(neighbour));
+        adresse_txt.setText("Adresse du neighbour");
 
         /**
          * Affiche la photo du profil

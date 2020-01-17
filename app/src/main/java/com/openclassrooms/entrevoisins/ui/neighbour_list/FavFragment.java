@@ -104,26 +104,4 @@ public class FavFragment extends Fragment {
         initList();
     }
 
-
-    /**
-     * Quand l'utilisateur clique sur le bouton "Favoris":
-     * le voisin est ajouté à l'onglet "Favorites"
-     *
-     * @param evennement
-     */
-    @Subscribe
-    public void onAddFavNeighbour(AddFavNeighbourEvent evennement) {
-        /* if (evennement.mNeighbour.getFavoris())
-            mNeighbours.add(evennement.mNeighbour);
-        else mNeighbours.remove(evennement.mNeighbour);
-        mRecyclerView.getAdapter().notifyDataSetChanged(); */
-
-       // mApiService.addFavNeighbour(evennement.mNeighbour);
-        initList();
-
-
-        System.out.println("onAddFavNeighbour utilisé");
-
-    }
-
 }
