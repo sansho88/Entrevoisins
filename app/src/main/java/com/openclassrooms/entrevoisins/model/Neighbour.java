@@ -16,6 +16,12 @@ public class Neighbour {
     /** Avatar */
     private String avatarUrl;
 
+    private String adresse;
+
+    private String numTph;
+
+    private String fbUrl;
+
     /** Favoris */
     private Boolean favoris = false;
 
@@ -26,11 +32,13 @@ public class Neighbour {
      * @param avatarUrl
      *
      */
-    public Neighbour(Integer id, String name, String avatarUrl) {
+    public Neighbour(Integer id, String name, String avatarUrl, String adresse, String numTph, String fbUrl) {
         this.id = id;
         this.name = name;
         this.avatarUrl = avatarUrl;
-
+        this.adresse = adresse;
+        this.numTph = numTph;
+        this.fbUrl = fbUrl;
     }
 
     public Integer getId() {
@@ -55,6 +63,30 @@ public class Neighbour {
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
+    }
+
+    public String getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
+    }
+
+    public String getNumTph() {
+        return numTph;
+    }
+
+    public void setNumTph(String numTph) {
+        this.numTph = numTph;
+    }
+
+    public String getFbUrl() {
+        return fbUrl;
+    }
+
+    public void setFbUrl(String fbUrl) {
+        this.fbUrl = fbUrl;
     }
 
     public Boolean getFavoris() {

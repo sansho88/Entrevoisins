@@ -100,8 +100,8 @@ public class FavFragment extends Fragment {
 
     @Subscribe
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
-        mApiService.deleteNeighbour(event.neighbour);
-        initList();
+        mNeighbours.remove(event.neighbour);
+        mRecyclerView.getAdapter().notifyDataSetChanged();
     }
 
 }

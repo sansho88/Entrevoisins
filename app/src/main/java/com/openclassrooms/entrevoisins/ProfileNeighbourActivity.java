@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.AddFavNeighbourEvent;
+import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
@@ -63,7 +64,9 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
          */
         nomAvatar_txt.setText(neighbour.getName());
         nomInfos_txt.setText(nomAvatar_txt.getText());
-        adresse_txt.setText("Adresse du neighbour");
+        adresse_txt.setText(neighbour.getAdresse());
+        tph_text.setText(neighbour.getNumTph());
+        social_text.setText(neighbour.getFbUrl());
 
         /**
          * Affiche la photo du profil
@@ -83,7 +86,7 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 onAddFavNeighbour(neighbour);
-                favState();
+
             }
         });
 
@@ -100,7 +103,12 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
 
     }
 
-    //@Subscribe
+    @Subscribe
+    public void onAddFavNeighbour(AddFavNeighbourEvent event) {
+
+        this.neighbour=event.mNeighbour;
+        favState();
+    }
     public void onAddFavNeighbour(Neighbour neighbour) {
         EventBus.getDefault().post(new AddFavNeighbourEvent(neighbour));
 
@@ -121,13 +129,13 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        //       EventBus.getDefault().register(this); //(crash de l'appli')
+        EventBus.getDefault().register(this); //(crash de l'appli')
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        //     EventBus.getDefault().unregister(this);  //(crash de l'appli')
+        EventBus.getDefault().unregister(this);  //(crash de l'appli')
     }
 
     //@Subscribe
