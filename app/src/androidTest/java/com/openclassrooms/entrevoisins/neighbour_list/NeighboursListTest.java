@@ -16,10 +16,18 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
+import static android.support.test.espresso.matcher.ViewMatchers.hasChildCount;
 import static android.support.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.openclassrooms.entrevoisins.utils.RecyclerViewItemCountAssertion.withItemCount;
+import static org.hamcrest.core.AllOf.allOf;
 import static org.hamcrest.core.IsNull.notNullValue;
 
 
@@ -51,7 +59,7 @@ public class NeighboursListTest {
     @Test
     public void myNeighboursList_shouldNotBeEmpty() {
         // First scroll to the position that needs to be matched and click on it.
-        onView(ViewMatchers.withId(R.id.list_neighbours))
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed()))
                 .check(matches(hasMinimumChildCount(1)));
     }
 
@@ -60,12 +68,51 @@ public class NeighboursListTest {
      */
     @Test
     public void myNeighboursList_deleteAction_shouldRemoveItem() {
+
+
         // Given : We remove the element at position 2
-        onView(ViewMatchers.withId(R.id.list_neighbours)).check(withItemCount(ITEMS_COUNT));
+         onView(allOf(withId(R.id.list_neighbours),isDisplayed())).check(withItemCount(ITEMS_COUNT)); //le "allOf" permet d'éviter l'erreur d'id multiples
         // When perform a click on a delete icon
-        onView(ViewMatchers.withId(R.id.list_neighbours))
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed()))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(1, new DeleteViewAction()));
         // Then : the number of element is 11
-        onView(ViewMatchers.withId(R.id.list_neighbours)).check(withItemCount(ITEMS_COUNT-1));
+        onView(allOf(ViewMatchers.withId(R.id.list_neighbours), isDisplayed())).check(withItemCount(ITEMS_COUNT-1));
+    }
+
+    @Test
+    public void myNeighbourList_clickOnContact_shouldShowProfile(){
+        //Pick the first neighbour from the list
+        onView(allOf(ViewMatchers.withId(R.id.list_neighbours), isDisplayed()))
+                .perform(actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.activity_profile_avatar_image)).check(matches(isDisplayed()));
+
+    }
+
+    @Test
+    public void myNeighbourList_onProfile_shouldShowRightName(){
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed()))
+                .perform(actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.activity_profile_nomAvatar_text))
+                .check(matches(withText("Caroline")));
+    }
+
+
+    @Test
+    public void myNeighbourList_onFavoritesTab_shouldOnlyShowFavs(){
+
+        //Vérifie que la liste des favoris est vide
+        onView(withText("Favorites")).perform(click());
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(matches(hasChildCount(0)));
+        onView(withText("My neighbours")).perform(click());
+
+        //Ajout d'un neighbour en favoris
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).perform(actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.activity_profile_favoris_floatingButton)).perform(click());
+
+        //vérifie que l'onglet des favoris contient bien un neighbour
+        onView(withId(R.id.activity_profile_back)).perform(click());
+        onView(withContentDescription("Favorites")).perform(click());
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(matches(hasChildCount(1)));
+
     }
 }

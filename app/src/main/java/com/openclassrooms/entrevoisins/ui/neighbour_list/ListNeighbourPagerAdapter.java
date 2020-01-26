@@ -5,8 +5,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 
-public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
-    private Fragment[] mFragments = {NeighbourFragment.newInstance(), FavFragment.newInstance()};
+class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
+    private final Fragment[] mFragments = {NeighbourFragment.newInstance(), FavFragment.newInstance()};
 
     public ListNeighbourPagerAdapter(FragmentManager fm) {
         super(fm);

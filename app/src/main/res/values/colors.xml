@@ -6,4 +6,5 @@
     <color name="white">#FFFFFF</color>
     <color name="transparent">#00000000</color>
     <color name="fond_leger">#33424242</color>
+    <color name="basic">#7C7C7C</color>
 </resources>

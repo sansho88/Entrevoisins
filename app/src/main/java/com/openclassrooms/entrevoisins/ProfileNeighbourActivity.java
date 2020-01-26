@@ -1,8 +1,7 @@
 package com.openclassrooms.entrevoisins;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,7 +9,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.AddFavNeighbourEvent;
-import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
@@ -33,27 +31,25 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
     TextView tph_text;
     @BindView(R.id.activity_profile_social_text)
     TextView social_text;
-    @BindView(R.id.aPropos_txt)
-    TextView aPropos_txt;
+    private static final String CONTACTID = "$CONTACT$";
     @BindView(R.id.activity_profile_favoris_floatingButton)
     ImageButton favButton;
     @BindView(R.id.activity_profile_back)
     ImageButton backButton;
-
-    public static final String CONTACTID = "$CONTACT$";
+    @BindView(R.id.description_txt)
+    TextView description;
 
 
     private Neighbour neighbour;
-    private NeighbourApiService neighbourApiService;
-    private int idIntent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_neighbour);
         ButterKnife.bind(this);
 
-        neighbourApiService = DI.getNeighbourApiService();
-        idIntent = getIntent().getIntExtra(CONTACTID, 0);
+        NeighbourApiService neighbourApiService = DI.getNeighbourApiService();
+        int idIntent = getIntent().getIntExtra(CONTACTID, 0);
         neighbour = neighbourApiService.get1Neighbour(idIntent);
 
 
@@ -67,6 +63,8 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
         adresse_txt.setText(neighbour.getAdresse());
         tph_text.setText(neighbour.getNumTph());
         social_text.setText(neighbour.getFbUrl());
+        description.setText(neighbour.getDesc());
+
 
         /**
          * Affiche la photo du profil
@@ -82,23 +80,12 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
         /**
          * Ajoute le contact aux favoris grace à l'étoile jaune
          */
-        favButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onAddFavNeighbour(neighbour);
-
-            }
-        });
+        favButton.setOnClickListener(view -> onAddFavNeighbour(neighbour));
 
         /**
          * Retour en arrière
          */
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        backButton.setOnClickListener(view -> finish());
 
 
     }
@@ -109,7 +96,7 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
         this.neighbour=event.mNeighbour;
         favState();
     }
-    public void onAddFavNeighbour(Neighbour neighbour) {
+    private void onAddFavNeighbour(Neighbour neighbour) {
         EventBus.getDefault().post(new AddFavNeighbourEvent(neighbour));
 
         //TODO: Actualiser l'onglet "Favorites" (actuallement rafraichi après une suppression de contact)
@@ -119,7 +106,7 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
     }
 
 
-    void favState() {
+    private void favState() {
         if (neighbour.getFavoris()) {
             favButton.setImageResource(R.drawable.ic_star_white_24dp); //Etoile pleine
         } else favButton.setImageResource(R.drawable.ic_star_border_white_24dp); //Etoile vide
@@ -129,13 +116,14 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        EventBus.getDefault().register(this); //(crash de l'appli')
+        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        EventBus.getDefault().unregister(this);  //(crash de l'appli')
+        EventBus.getDefault().unregister(this);
+        overridePendingTransition(0, 0);
     }
 
     //@Subscribe

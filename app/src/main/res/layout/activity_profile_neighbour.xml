@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_height="match_parent"
+<ScrollView xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:paddingBottom="20dp"
     xmlns:android="http://schemas.android.com/apk/res/android" >
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
 
     tools:context=".ProfileNeighbourActivity">
@@ -27,6 +27,7 @@
         android:outlineAmbientShadowColor="@color/transparent"
         app:backgroundTint="@color/white"
         app:layout_constraintVertical_bias="0.368"
+        android:focusable="true"
         app:srcCompat="@drawable/ic_star_border_white_24dp" />
 
 
@@ -36,16 +37,19 @@
         android:layout_height="250dp"
         android:scaleType="center"
 
+        android:contentDescription="TODO"
         tools:srcCompat="@tools:sample/avatars" />
 
     <ImageButton
         android:id="@+id/activity_profile_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="-10dp"
+        android:layout_marginStart="0dp"
         android:clickable="true"
         app:backgroundTint="@color/transparent"
 
+        android:contentDescription="Back"
+        android:focusable="true"
         app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
 
 
@@ -113,14 +117,17 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_place_black_24dp"/>
+                        android:contentDescription="TODO"
+                        app:srcCompat="@drawable/ic_place_black_24dp" />
                     <TextView
                         android:id="@+id/activity_profile_adresse_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
                         android:text="Adresse"
-                        android:maxLines="1"/>
+                        android:autoLink="map"
+                        android:maxLines="1"
+                         />
 
                 </LinearLayout>
 
@@ -135,15 +142,19 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_phone_black_24dp"/>
+                        android:contentDescription="TODO"
+                        app:srcCompat="@drawable/ic_phone_black_24dp" />
                     <TextView
                         android:id="@+id/activity_profile_tph_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
                         android:text="Numéro TPH"
-
-                        android:maxLines="1"/>
+                        android:autoLink="phone"
+                        android:maxLines="1"
+                        android:textColorLink="@color/basic"
+                        android:textStyle="normal"
+                        tools:ignore="UnusedAttribute" />
 
                 </LinearLayout>
 
@@ -158,14 +169,18 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:srcCompat="@drawable/ic_public_black_24dp"/>
+                        android:contentDescription="TODO"
+                        app:srcCompat="@drawable/ic_public_black_24dp" />
                     <TextView
                         android:id="@+id/activity_profile_social_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
                         android:text="Page FB"
-                        android:maxLines="1"/>
+                        android:autoLink="web"
+                        android:maxLines="1"
+                        android:textColorLink="@color/basic"
+                        tools:ignore="UnusedAttribute" />
 
                 </LinearLayout>
 
@@ -177,29 +192,34 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
             android:orientation="vertical">
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="10dp"
                 app:cardCornerRadius="6dp"
-                app:cardElevation="3dp">
+                app:cardElevation="3dp"
+                tools:ignore="UnusedAttribute">
 
                 <TextView
                     android:id="@+id/textView_aproposdemoi_pasToucher"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
+                    android:layout_marginVertical="8dp"
+                    android:layout_marginStart="5dp"
                     android:background="@color/white"
                     android:paddingHorizontal="10dp"
-                    android:layout_marginVertical="8dp"
                     android:paddingTop="6dp"
                     android:paddingBottom="2dp"
                     android:text="A propos de moi"
                     android:textColor="#FF000000"
-                    android:textSize="23sp" />
+                    android:textSize="23sp"
+                    tools:ignore="UnusedAttribute" />
 
                 <!--Ligne de séparation -->
                 <LinearLayout
@@ -209,10 +229,11 @@
                     android:background="@color/fond_leger" />
 
                 <TextView
-                    android:id="@+id/aPropos_txt"
+                    android:id="@+id/description_txt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="60dp"
+
                     android:background="@color/white"
                     android:paddingStart="15dp"
                     android:paddingTop="5dp"

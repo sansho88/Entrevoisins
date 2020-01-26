@@ -37,9 +37,10 @@ public interface NeighbourApiService {
     void deleteFav(Neighbour neighbour);
 
     /**
+     * Get only 1 neighbour
      * = List<Neighbour>.get(id);
-     * @param numId
-     * @return
+     * @param numId Index from the neighbours list
+     * @return a neighbour
      */
     Neighbour get1Neighbour(int numId);
 

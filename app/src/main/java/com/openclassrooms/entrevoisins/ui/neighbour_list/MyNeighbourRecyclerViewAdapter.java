@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,11 +15,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.ProfileNeighbourActivity;
 import com.openclassrooms.entrevoisins.R;
-import com.openclassrooms.entrevoisins.events.AddFavNeighbourEvent;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
-import com.openclassrooms.entrevoisins.service.NeighbourApiService;
-
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -32,7 +28,7 @@ import butterknife.ButterKnife;
 
 public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeighbourRecyclerViewAdapter.ViewHolder> {
 
-    private List<Neighbour> mNeighbours;
+    private final List<Neighbour> mNeighbours;
     public static final String CONTACT_BUNDLE = "$CONTACT$";
 
 
@@ -57,27 +53,19 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.mNeighbourAvatar);
 
-        holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
-            }
-        });
+        //Suppression du voisin
+        holder.mDeleteButton.setOnClickListener(v -> EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour)));
 
-        /**
-         * Quand cliqué, le profil détaillé correspondant à la personne s'affiche
-         */
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Context mContext = holder.itemView.getContext();
-                int neighbourId = neighbour.getId();
 
-                Intent contactIntent = new Intent(mContext, ProfileNeighbourActivity.class);
-                contactIntent.putExtra("$CONTACT$", neighbourId);
-                mContext.startActivity(contactIntent);
+         //Affichage du profil détaillé et transmission de l'ID du voisin concerné
+        holder.itemView.setOnClickListener(view -> {
+            Context mContext = holder.itemView.getContext();
+            int neighbourId = neighbour.getId();
 
-            }
+            Intent contactIntent = new Intent(mContext, ProfileNeighbourActivity.class);
+            contactIntent.putExtra(CONTACT_BUNDLE, neighbourId);
+            mContext.startActivity(contactIntent);
+
         });
     }
 
@@ -96,7 +84,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         public ImageButton mDeleteButton;
 
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }

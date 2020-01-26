@@ -22,6 +22,8 @@ public class Neighbour {
 
     private String fbUrl;
 
+    private String desc;
+
     /** Favoris */
     private Boolean favoris = false;
 
@@ -32,13 +34,14 @@ public class Neighbour {
      * @param avatarUrl
      *
      */
-    public Neighbour(Integer id, String name, String avatarUrl, String adresse, String numTph, String fbUrl) {
+    public Neighbour(Integer id, String name, String avatarUrl, String adresse, String numTph, String fbUrl, String description) {
         this.id = id;
         this.name = name;
         this.avatarUrl = avatarUrl;
         this.adresse = adresse;
         this.numTph = numTph;
         this.fbUrl = fbUrl;
+        this.desc = description;
     }
 
     public Integer getId() {
@@ -97,6 +100,13 @@ public class Neighbour {
         this.favoris = favoris;
     }
 
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
 
     @Override
     public boolean equals(Object o) {
