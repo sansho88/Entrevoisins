@@ -2,6 +2,7 @@ package com.openclassrooms.entrevoisins;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -41,6 +42,7 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
 
 
     private Neighbour neighbour;
+    public static final String TAG= "ProfileNeighbour";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +94,7 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
 
     @Subscribe
     public void onAddFavNeighbour(AddFavNeighbourEvent event) {
-
+        Log.d(TAG, "onAddFavNeighbour: Event appelé");
         this.neighbour=event.mNeighbour;
         favState();
     }
