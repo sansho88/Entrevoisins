@@ -2,6 +2,8 @@
 Reprise du projet n°3 du parcours de Développeur d'Application Android pour OpenClassRoom
 
 Application "Entre-voisins" permettant de créer des liens avec son voisinage!
+![Image de l'activité principale](https://github.com/sansho88/Entrevoisins/blob/master/list_neighbours.PNG)
+
 Fonctionnalités: 
 	* Affichage de la liste des utilisateurs aux alentours
 	* Accès aux détails de chaque utilisateur, comprenant leurs coordonnées et une petite présentation
@@ -33,9 +35,12 @@ Pour Android Studio:
 ## Tester l'application
 ![Image run](https://github.com/sansho88/Entrevoisins/blob/master/run.PNG)
 
-	1. Dans votre IDE, en haut à droite vous avez une barre d'icônes avec notamment une flèche verte (de type "Play"). 
-	2. Selectionnez d'abord un emulateur depuis l'AVD Manager (celui de votre choix mais l'API doit être supérieur ou égal à 21).
-	3. Une fois votre émulateur configuré, cliquez sur la flèche Verte. Le projet se compilera avant de s'exécuter
+	1. Dans votre IDE, en haut à droite vous avez une barre d'icônes
+	 avec notamment une flèche verte (de type "Play"). 
+	2. Selectionnez d'abord un emulateur depuis l'AVD Manager 
+	(celui de votre choix mais l'API doit être supérieur ou égal à 21).
+	3. Une fois votre émulateur configuré, cliquez sur la flèche Verte. 
+	Le projet se compilera avant de s'exécuter
 	4. Enjoy! 
 	
 ```
