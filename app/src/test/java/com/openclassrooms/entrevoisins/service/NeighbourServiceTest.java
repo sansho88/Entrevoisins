@@ -44,10 +44,15 @@ public class NeighbourServiceTest {
 
 
     @Test
-    public void upDateNeighbourToFavoritesWithSuccess() {
+    public void addNeighbourToFavoritesWithSuccess() {
         Neighbour neighbour = service.get1Neighbour(0);
         service.addFavNeighbour(neighbour);
         assertTrue(service.get1Neighbour(0).getFavoris());
+    }
+
+    @Test
+    public void removeNeighbourFromFavoritesWithSUccess() {
+        Neighbour neighbour = service.get1Neighbour(0);
         service.deleteFav(neighbour);
         assertFalse(service.get1Neighbour(0).getFavoris());
     }
@@ -57,11 +62,11 @@ public class NeighbourServiceTest {
         List<Neighbour> neighbours = service.getNeighbours();
         int nbFavNeighbours = 0;
         neighbours.get(0).setFavoris(true);
-        neighbours.get(neighbours.size()-1).setFavoris(true);
-        for (int i = neighbours.size()-1; i >= 0; i--) {
+        neighbours.get(neighbours.size() - 1).setFavoris(true);
+        for (int i = neighbours.size() - 1; i >= 0; i--) {
             if (neighbours.get(i).getFavoris()) nbFavNeighbours++;
         }
-        assertFalse(nbFavNeighbours!=2);
+        assertFalse(nbFavNeighbours != 2);
 
     }
 
