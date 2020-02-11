@@ -31,8 +31,8 @@ Pour Android Studio:
 ```
 
 ## Tester l'application
-
-	1. Dans votre IDE, en haut à droite vous avez une barre d'icônes avec notamment une flèche verte (de type "Play"). ![Image run](https://github.com/sansho88/Entrevoisins/blob/master/run.PNG)
+![Image run](https://github.com/sansho88/Entrevoisins/blob/master/run.PNG)
+	1. Dans votre IDE, en haut à droite vous avez une barre d'icônes avec notamment une flèche verte (de type "Play"). 
 	2. Selectionnez d'abord un emulateur depuis l'AVD Manager (celui de votre choix mais l'API doit être supérieur ou égal à 21).
 	3. Une fois votre émulateur configuré, cliquez sur la flèche Verte. Le projet se compilera avant de s'exécuter
 	4. Enjoy! 
