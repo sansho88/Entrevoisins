@@ -5,9 +5,13 @@ Application "Entre-voisins" permettant de créer des liens avec son voisinage!
 ![Image de l'activité principale](https://github.com/sansho88/Entrevoisins/blob/master/list_neighbours.PNG)
 
 Fonctionnalités: 
+
 	* Affichage de la liste des utilisateurs aux alentours
 	* Accès aux détails de chaque utilisateur, comprenant leurs coordonnées et une petite présentation
 	* Ajout du voisin de son choix dans les favoris, listé dans un onglet apparent sur l'activité principale.
+	
+![Image de l'activité de profile](https://github.com/sansho88/Entrevoisins/blob/master/profile_neighbour.PNG)
+
 
 ## Avant de commencer
 
@@ -31,6 +35,8 @@ Pour Android Studio:
 	2. Rendez-vous là où vous avez placé le dossier du projet
 	3. Selectionnez "EntreVoisins" (l'icône d'Android Studio devrait être visible)
 ```
+![Accueil Android Studio](https://github.com/sansho88/Entrevoisins/blob/master/as_home.PNG)
+
 
 ## Tester l'application
 ![Image run](https://github.com/sansho88/Entrevoisins/blob/master/run.PNG)
