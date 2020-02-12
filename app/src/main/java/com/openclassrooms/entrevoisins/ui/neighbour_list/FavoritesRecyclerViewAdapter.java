@@ -1,6 +1,7 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.openclassrooms.entrevoisins.ProfileNeighbourActivity.TAG;
+
 public class FavoritesRecyclerViewAdapter extends RecyclerView.Adapter<FavoritesRecyclerViewAdapter.ViewHolder> {
 
     protected final List<Neighbour> listeFavoris;
@@ -31,7 +34,7 @@ public class FavoritesRecyclerViewAdapter extends RecyclerView.Adapter<Favorites
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_neighbour, parent, false);
-        System.out.println("[DEBUG: FavRecycView] Liste FAV créée");
+        Log.d(TAG, "onCreateViewHolder: Liste FAV créée");
         return new ViewHolder(view);
     }
 
@@ -48,7 +51,7 @@ public class FavoritesRecyclerViewAdapter extends RecyclerView.Adapter<Favorites
     }
     @Override
     public int getItemCount() {
-        System.out.println("[DEBUG]: Taille liste favoris: " + listeFavoris.size());
+        Log.d(TAG, "getItemCount: Taille liste favoris: " + listeFavoris.size());
         return listeFavoris.size();
     }
 
