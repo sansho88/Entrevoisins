@@ -54,9 +54,6 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
         int idIntent = getIntent().getIntExtra(CONTACTID, 0);
         neighbour = neighbourApiService.get1Neighbour(idIntent);
 
-
-        System.out.println("Profil appartenant à : " + neighbour.getName() + "; ID: " + neighbour.getId() + "; idIntent: " + idIntent + "; Place dans la liste: " + neighbourApiService.getNeighbours().indexOf(neighbour) );
-
         /**
          * Affecte chaque view à son élément du contact correspondant
          */
@@ -100,9 +97,7 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
     }
     private void onAddFavNeighbour(Neighbour neighbour) {
         EventBus.getDefault().post(new AddFavNeighbourEvent(neighbour));
-
-        //TODO: Actualiser l'onglet "Favorites" (actuallement rafraichi après une suppression de contact)
-        System.out.println("Modification du favoris depuis le profil");
+        Log.d(TAG, "Modification du favoris depuis le profil");
 
 
     }
@@ -127,9 +122,6 @@ public class ProfileNeighbourActivity extends AppCompatActivity {
         EventBus.getDefault().unregister(this);
         overridePendingTransition(0, 0);
     }
-
-    //@Subscribe
-    //AddFavNeighbourEvent
 
 
 }
